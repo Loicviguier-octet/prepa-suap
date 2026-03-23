@@ -64,38 +64,45 @@ if 'quiz_data' not in st.session_state:
             {"q": "Quel est le débit d'O2 pour un ACR avec insufflateur ?", "r": "15 L/min", "options": ["9 L/min", "12 L/min", "15 L/min"], "expli": "Débit maximum pour remplir le réservoir."},
         ]
 
-# Initialisation du score et de l'index
-if 'score' not in st.session_state: st.session_state.score = 0
-if 'current_q' not in st.session_state: st.session_state.current_q = 0
+# --- LOGIQUE DU QUIZ ---
 
-# Barre de progression (corrigée)
-progression = (st.session_state.current_q) / len(st.session_state.quiz_data)
-st.progress(progression)
-
-# Affichage de la question (corrigée)
+# On vérifie si on n'a pas dépassé le nombre de questions
 if st.session_state.current_q < len(st.session_state.quiz_data):
-    item = st.session_state.quiz_data[st.session_state.current_q] # <--- Le crochet est ici !
+    item = st.session_state.quiz_data[st.session_state.current_q]
     
-    st.subheader(f"Question {st.session_state.current_q + 1}")
+    st.subheader(f"Question {st.session_state.current_q + 1} / {len(st.session_state.quiz_data)}")
     st.info(item["q"])
     
-    reponse = st.radio("Ta réponse :", item["options"], key=f"radio_{st.session_state.current_q}")
-    
-    if st.button("Valider la réponse"):
-        if reponse == item["r"]:
-            st.success(f"Bravo ! 🎯 {item['expli']}")
-            st.session_state.score += 1
-        else:
-            st.error(f"Raté... La réponse était : {item['r']}. {item['expli']}")
+    # Formulaire pour éviter que la page se recharge à chaque clic
+    with st.form(key=f"form_{st.session_state.current_q}"):
+        reponse = st.radio("Ta réponse :", item["options"])
+        valider = st.form_submit_button("Valider la réponse")
         
-        # Petit bouton pour passer à la suite
-        if st.button("Question suivante ➡️"):
+        if valider:
+            if reponse == item["r"]:
+                st.success(f"✅ Bravo ! {item['expli']}")
+                st.session_state.score += 1
+            else:
+                st.error(f"❌ Raté... La réponse était : {item['r']}")
+                st.warning(f"💡 {item['expli']}")
+            
+            # On prépare le passage à la question suivante
             st.session_state.current_q += 1
-            st.rerun()
+            st.write("Appuyez sur le bouton ci-dessous pour continuer.")
+
+    # Bouton pour passer à la suite (en dehors du formulaire)
+    if st.button("Passer à la question suivante ➡️"):
+        st.rerun()
+
 else:
+    # --- FIN DU QUIZ ---
     st.balloons()
     st.success(f"🏆 Quiz terminé ! Ton score final : {st.session_state.score} / {len(st.session_state.quiz_data)}")
-    if st.button("Recommencer"):
+    
+    if st.button("Recommencer le test"):
+        st.session_state.current_q = 0
+        st.session_state.score = 0
+        st.rerun()
         st.session_state.current_q = 0
         st.session_state.score = 0
         st.rerun()
