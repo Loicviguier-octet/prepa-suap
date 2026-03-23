@@ -27,13 +27,13 @@ if 'quiz_data' not in st.session_state:
 if 'score' not in st.session_state: st.session_state.score = 0
 if 'current_q' not in st.session_state: st.session_state.current_q = 0
 
-# Barre de progression
+# Barre de progression (corrigée)
 progression = (st.session_state.current_q) / len(st.session_state.quiz_data)
 st.progress(progression)
 
-# Affichage de la question
+# Affichage de la question (corrigée)
 if st.session_state.current_q < len(st.session_state.quiz_data):
-    item = st.session_state.quiz_data[st.session_state.current_q)
+    item = st.session_state.quiz_data[st.session_state.current_q] # <--- Le crochet est ici !
     
     st.subheader(f"Question {st.session_state.current_q + 1}")
     st.info(item["q"])
