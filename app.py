@@ -64,18 +64,29 @@ if 'quiz_data' not in st.session_state:
             {"q": "Quel est le débit d'O2 pour un ACR avec insufflateur ?", "r": "15 L/min", "options": ["9 L/min", "12 L/min", "15 L/min"], "expli": "Débit maximum pour remplir le réservoir."},
         ]
 
+import random # Assure-toi que cette ligne est bien tout en haut du fichier
+
 # --- LOGIQUE DU QUIZ ---
 
-# On vérifie si on n'a pas dépassé le nombre de questions
 if st.session_state.current_q < len(st.session_state.quiz_data):
     item = st.session_state.quiz_data[st.session_state.current_q]
     
     st.subheader(f"Question {st.session_state.current_q + 1} / {len(st.session_state.quiz_data)}")
     st.info(item["q"])
     
-    # Formulaire pour éviter que la page se recharge à chaque clic
+    # --- MÉLANGE DES RÉPONSES ---
+    # On crée une copie des options pour ne pas modifier la liste originale
+    options_melangees = list(item["options"])
+    # Si on n'a pas encore mélangé pour cette question précise
+    if f"options_{st.session_state.current_q}" not in st.session_state:
+        random.shuffle(options_melangees)
+        st.session_state[f"options_{st.session_state.current_q}"] = options_melangees
+    
+    current_options = st.session_state[f"options_{st.session_state.current_q}"]
+
+    # --- FORMULAIRE ---
     with st.form(key=f"form_{st.session_state.current_q}"):
-        reponse = st.radio("Ta réponse :", item["options"])
+        reponse = st.radio("Ta réponse :", current_options)
         valider = st.form_submit_button("Valider la réponse")
         
         if valider:
@@ -86,12 +97,12 @@ if st.session_state.current_q < len(st.session_state.quiz_data):
                 st.error(f"❌ Raté... La réponse était : {item['r']}")
                 st.warning(f"💡 {item['expli']}")
             
-            # On prépare le passage à la question suivante
-            st.session_state.current_q += 1
-            st.write("Appuyez sur le bouton ci-dessous pour continuer.")
+            st.session_state.answered = True # Marque que la réponse est donnée
+            st.write("Cliquez sur 'Question suivante' pour continuer.")
 
-    # Bouton pour passer à la suite (en dehors du formulaire)
+    # Bouton pour passer à la suite
     if st.button("Passer à la question suivante ➡️"):
+        st.session_state.current_q += 1
         st.rerun()
 
 else:
@@ -100,9 +111,10 @@ else:
     st.success(f"🏆 Quiz terminé ! Ton score final : {st.session_state.score} / {len(st.session_state.quiz_data)}")
     
     if st.button("Recommencer le test"):
-        st.session_state.current_q = 0
-        st.session_state.score = 0
-        st.rerun()
+        # On vide aussi les options mélangées stockées
+        for key in list(st.session_state.keys()):
+            if key.startswith("options_"):
+                del st.session_state[key]
         st.session_state.current_q = 0
         st.session_state.score = 0
         st.rerun()
