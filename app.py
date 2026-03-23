@@ -58,7 +58,7 @@ if 'quiz_data' not in st.session_state:
         
         # --- BLOC 10 : ÉVALUATION ---
         {"q": "Une MSP (Mise en Situation Professionnelle) sert à :", "r": "Évaluer les compétences en situation réelle", "options": ["Faire du sport", "Évaluer les compétences en situation réelle", "Apprendre la théorie"], "expli": "La MSP est l'outil principal de validation du CA 1 équipe."}
-    ]
+
         {"q": "Quelle est la fréquence de compression (MCE) ?", "r": "100-120/min", "options": ["80-100/min", "100-120/min", "120-140/min"], "expli": "Référence GNR ACR 2024."},
         {"q": "Que signifie le 'P' dans l'acronyme PESTE ?", "r": "Pouls", "options": ["Pression", "Pouls", "Pupilles"], "expli": "Examen circulatoire rapide."},
         {"q": "Quel est le débit d'O2 pour un ACR avec insufflateur ?", "r": "15 L/min", "options": ["9 L/min", "12 L/min", "15 L/min"], "expli": "Débit maximum pour remplir le réservoir."},
