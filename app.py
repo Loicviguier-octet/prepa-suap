@@ -10,7 +10,7 @@ st.markdown("""
     .stButton>button { width: 100%; border-radius: 20px; height: 3em; background-color: #e63946; color: white; }
     .stProgress > div > div > div > div { background-color: #e63946; }
     </style>
-    """, unsafe_allow_index=True)
+    """, unsafe_allow_html=True)
 
 st.title("🚑 Prépa Chef d'Agrès SUAP")
 st.write("---")
