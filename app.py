@@ -17,7 +17,7 @@ st.write("---")
 
 # Base de données de questions (On pourra en ajouter des centaines)
 if 'quiz_data' not in st.session_state:
-if 'quiz_data' not in st.session_state:
+    if 'quiz_data' not in st.session_state:
         st.session_state.quiz_data = [
             # --- BLOC 1 : COMMANDEMENT ET POSTURE ---
             {"q": "Selon le RNAC, quelle est la mission principale du CA 1 équipe concernant son personnel ?", "r": "Commander et diriger l'équipe", "options": ["Réaliser les soins seul", "Commander et diriger l'équipe", "Attendre l'ordre de l'officier"], "expli": "Le CA doit assurer la direction de son équipe (L'équipier et le conducteur)."},
