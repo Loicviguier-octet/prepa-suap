@@ -57,7 +57,7 @@ if 'quiz_data' not in st.session_state:
             {"q": "Le CA doit savoir anticiper. Qu'est-ce que cela signifie en SUAP ?", "r": "Prévoir l'évolution de la victime et les besoins futurs", "options": ["Partir avant la fin des soins", "Prévoir l'évolution de la victime et les besoins futurs", "Deviner l'adresse de l'intervention"], "expli": "L'anticipation permet de demander les renforts (SMUR) au bon moment."},
             
             # --- BLOC 10 : ÉVALUATION ---
-            {"q": "Une MSP (Mise en Situation Professionnelle) sert à :", "r": "Évaluer les compétences en situation réelle", "options": ["Faire du sport", "Évaluer les compétences en situation réelle", "Apprendre la théorie"], "expli": "La MSP est l'outil principal de validation du CA 1 équipe."}
+            {"q": "Une MSP (Mise en Situation Professionnelle) sert à :", "r": "Évaluer les compétences en situation réelle", "options": ["Faire du sport", "Évaluer les compétences en situation réelle", "Apprendre la théorie"], "expli": "La MSP est l'outil principal de validation du CA 1 équipe."},
     
             {"q": "Quelle est la fréquence de compression (MCE) ?", "r": "100-120/min", "options": ["80-100/min", "100-120/min", "120-140/min"], "expli": "Référence GNR ACR 2024."},
             {"q": "Que signifie le 'P' dans l'acronyme PESTE ?", "r": "Pouls", "options": ["Pression", "Pouls", "Pupilles"], "expli": "Examen circulatoire rapide."},
